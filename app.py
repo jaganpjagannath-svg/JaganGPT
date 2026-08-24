@@ -87,7 +87,7 @@ def chat():
         return jsonify({
             "error":
                 "GOOGLE_API_KEY is missing. "
-                "Please add your Gemini API key to .env."
+                "Please add your Gemini API key to the environment variables."
         }), 500
 
 
@@ -279,10 +279,22 @@ def health():
 
 if __name__ == "__main__":
 
+    # Render provides the PORT environment variable.
+    # Local development falls back to port 5000.
+
+    port = int(
+        os.environ.get(
+            "PORT",
+            5000
+        )
+    )
+
     app.run(
 
-        host="127.0.0.1",
+        host="0.0.0.0",
 
-        port=5000,
+        port=port,
+
+        debug=False
 
     )
